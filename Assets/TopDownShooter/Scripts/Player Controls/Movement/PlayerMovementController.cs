@@ -10,14 +10,14 @@ namespace TopDownShooter.PlayerControls
     {
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private InputData inputData;
+        [SerializeField] private Transform targetTransform;
         [SerializeField] private PlayerMovementSettings _playerMovementSettings;
 
         private void Update()
         {
             _rigidbody.MovePosition(_rigidbody.position + 
-                                    (inputData.Vertical * _playerMovementSettings.VerticalSpeed * _rigidbody.transform.forward));
-            _rigidbody.MovePosition(_rigidbody.position + 
-                                    (inputData.Horizontal * _playerMovementSettings.HorizontalSpeed * _rigidbody.transform.right));
+                                    (inputData.Vertical * _playerMovementSettings.VerticalSpeed * targetTransform.transform.forward));
+            targetTransform.Rotate(0,_playerMovementSettings.HorizontalSpeed * inputData.Horizontal,0, Space.Self);
         }
     }
 

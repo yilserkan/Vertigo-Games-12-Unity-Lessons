@@ -8,31 +8,28 @@ namespace TopDownShooter.Camera
     public class CameraController : MonoBehaviour
     {
         [SerializeField] private CameraSettings settings;
-        [SerializeField] private Transform targetTransform;
+        [SerializeField] private Transform rotationTarget;
+        [SerializeField] private Transform positionTarget;
         [SerializeField] private Transform cameraTransform;
 
         private void Update()
         {
-            CameraRotateFollow();
             CameraPositionFollow();
+            CameraRotateFollow();
         }
 
         private void CameraRotateFollow()
         {
             cameraTransform.rotation = Quaternion.Lerp(
                 cameraTransform.rotation,
-                Quaternion.LookRotation((targetTransform.position - cameraTransform.position), Vector3.up),
+                Quaternion.LookRotation(rotationTarget.forward),
                 settings.RotationLerpSpeed * Time.deltaTime
                 );
         }
 
         private void CameraPositionFollow()
         {
-            cameraTransform.position = Vector3.Lerp(
-                cameraTransform.position, 
-                targetTransform.position + settings.OffsetPosition, 
-                settings.PositionLerpSpeed * Time.deltaTime
-                );
+            cameraTransform.localPosition = settings.OffsetPosition;
         }
     }
 
