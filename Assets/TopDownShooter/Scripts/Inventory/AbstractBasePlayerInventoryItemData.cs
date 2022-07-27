@@ -7,6 +7,11 @@ namespace TopDownShooter.Inventory
     public abstract class AbstractBasePlayerInventoryItemData : ScriptableObject
     {
         public abstract void CreateIntoInventory(PlayerInventoryController targetPlayerInventory);
+
+        public void Destroy()
+        {
+            Destroy(this);
+        }
     }
 
 }
