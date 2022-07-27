@@ -12,5 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 520bc76437a99d24591dac8330767753, type: 3}
   m_Name: Input Data_LocalPlayerRotation
   m_EditorClassIdentifier: 
-  horizontal: 0
-  vertical: 0
+  Horizontal: 0
+  Vertical: 0
+  isAxisActive: 0
+  horizontalAxisName: 
+  verticalAxisName: 
+  isHorizontalKeyInputActive: 1
+  horizontalPositiveKey: 101
+  horizontalNegativKey: 113
+  isVerticalKeyInputActive: 0
+  verticalPositiveKey: 0
+  verticalNegativKey: 0
+  lerpSpeed: 1
