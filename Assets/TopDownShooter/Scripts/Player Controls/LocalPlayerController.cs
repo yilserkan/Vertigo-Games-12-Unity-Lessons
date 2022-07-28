@@ -14,7 +14,6 @@ namespace TopDownShooter
 
         private void Update()
         {
-            shootInputData.ProcessInput();
             if (shootInputData.Horizontal > 0)
             {
                 playerInventoryController.ReactiveShootCommand.Execute();

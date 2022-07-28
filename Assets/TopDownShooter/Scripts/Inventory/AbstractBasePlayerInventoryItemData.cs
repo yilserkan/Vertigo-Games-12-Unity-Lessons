@@ -18,7 +18,10 @@ namespace TopDownShooter.Inventory
 
         public void Destroy()
         {
-            compositeDisposable.Dispose();
+            if (compositeDisposable != null)
+            {
+                compositeDisposable.Dispose();
+            }
             Destroy(this);
         }
     }
