@@ -1,0 +1,25 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using TopDownShooter.Inventory;
+using TopDownShooter.PlayerInput;
+using UnityEngine;
+
+namespace TopDownShooter
+{
+    public class LocalPlayerController : MonoBehaviour
+    {
+        [SerializeField] private PlayerInventoryController playerInventoryController;
+        [SerializeField] private InputData shootInputData;
+
+        private void Update()
+        {
+            shootInputData.ProcessInput();
+            if (shootInputData.Horizontal > 0)
+            {
+                playerInventoryController.ReactiveShootCommand.Execute();
+            }
+        }
+    }
+
+}
