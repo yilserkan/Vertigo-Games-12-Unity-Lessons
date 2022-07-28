@@ -23,7 +23,9 @@ namespace TopDownShooter.AI
         [SerializeField] private List<AITarget> targetsList = new List<AITarget>();
 
         private CompositeDisposable _targetDispose;
-        private Transform targetTransform;
+        
+        private Transform _targetTransform;
+        private bool _hasTarget;
 
         private void Awake()
         {
@@ -48,34 +50,35 @@ namespace TopDownShooter.AI
             }
             else
             {
-                targetTransform = null;
+                _targetTransform = null;
+                _hasTarget = false;
             }
         }
         
         private void UpdateTarget()
         {
             if (targetsList.Count == 0 ) { return; }
+
+            _hasTarget = true;
             
-            targetTransform = targetsList[0].transform;
-            aiMovementInputData.SetTarget(transform, targetTransform);
-            aiRotationInputData.SetTarget(towerRotationController.Tower, targetTransform);
+            _targetTransform = targetsList[0].transform;
+            aiMovementInputData.SetTarget(transform, _targetTransform);
+            aiRotationInputData.SetTarget(towerRotationController.Tower, _targetTransform);
             
             _targetDispose = new CompositeDisposable();
             targetsList[0].OnDeath.Subscribe(OnTargetdeath).AddTo(_targetDispose);
-
-            
         }
         
         
         private void Update()
         {
             // ADD BOOL CHECK FOR PERFORMANCE
-            if(targetTransform == null) { return; }
+            if(!_hasTarget) { return; }
             
             aiMovementInputData.ProcessInput();
             aiRotationInputData.ProcessInput();
 
-            if (Mathf.Abs(aiRotationInputData.Horizontal) < .25f && Vector3.Distance(targetTransform.position, transform.position ) < 7)
+            if (Mathf.Abs(aiRotationInputData.Horizontal) < .25f && Vector3.Distance(_targetTransform.position, transform.position ) < 7)
             {
                 playerInventoryController.ReactiveShootCommand.Execute();
             }
