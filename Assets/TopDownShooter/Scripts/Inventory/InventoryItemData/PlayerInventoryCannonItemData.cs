@@ -19,7 +19,7 @@ namespace TopDownShooter.Inventory
         public override void InstansiateAndInitialize(PlayerInventoryController playerInventoryController)
         {
             base.InstansiateAndInitialize(playerInventoryController);
-            InstansiateAndInitializePrefab(playerInventoryController.Parent);
+            InstansiateAndInitializePrefab(playerInventoryController.CannonParent);
 
             playerInventoryController.ReactiveShootCommand.Subscribe(OnReactiveShootCommand).AddTo(compositeDisposable);
             
@@ -36,7 +36,7 @@ namespace TopDownShooter.Inventory
         {
             if (Time.time - _lastShootTime > rpm)
             {
-                instansiated.Shoot();
+                instansiated.Shoot(Damage);
                 _lastShootTime = Time.time;
             }
             else

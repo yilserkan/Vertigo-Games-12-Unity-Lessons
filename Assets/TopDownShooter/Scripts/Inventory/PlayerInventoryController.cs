@@ -13,7 +13,8 @@ namespace TopDownShooter.Inventory
 
         public ReactiveCommand ReactiveShootCommand;
 
-        public Transform Parent;
+        public Transform CannonParent;
+        public Transform BodyParent;
 
         private void Start()
         {
