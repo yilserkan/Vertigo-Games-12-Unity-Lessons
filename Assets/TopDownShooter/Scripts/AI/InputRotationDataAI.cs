@@ -9,7 +9,7 @@ namespace TopDownShooter.AI
     {
         public override void ProcessInput()
         {
-            Vector3 tempTarget = new Vector3(target.x, 0, target.z);
+            Vector3 tempTarget = new Vector3(targetTransform.position.x, 0, targetTransform.position.z);
             Vector3 tempAiPosition = new Vector3(aiTransform.position.x, 0, aiTransform.position.z);
             
             float dotTurnRotation = Vector3.Dot(aiTransform.right, (tempTarget - tempAiPosition).normalized);

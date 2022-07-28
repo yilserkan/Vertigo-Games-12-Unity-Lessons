@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TopDownShooter.Stats;
 using UnityEngine;
+using UniRx;
 
 namespace TopDownShooter
 {
@@ -10,6 +11,9 @@ namespace TopDownShooter
     {
         [SerializeField] private Collider collider;
         [SerializeField] private float health = 100f;
+
+        public ReactiveCommand OnDeath = new ReactiveCommand();
+        
         public int InstanceID { get; private set; }
 
         private Vector3 _defaultScale;
@@ -28,13 +32,10 @@ namespace TopDownShooter
             if (health <= 0)
             {
                 this.RemoveDamageable();
+                OnDeath.Execute();
                 Destroy(gameObject);
             }
         }
-
-        private void Update()
-        {
-            transform.localScale = Vector3.Lerp(transform.localScale, (health/100f)*_defaultScale, 1);
-        }
+        
     }
 }

@@ -3,11 +3,11 @@ using TopDownShooter.PlayerInput;
 
 public class InputDataAI : InputData
 {
-    protected Vector3 target;
+    protected Transform targetTransform;
     protected Transform aiTransform;
-    public void SetTarget(Transform from ,Vector3 targetPosition)
+    public void SetTarget(Transform from ,Transform to)
     {
         aiTransform = from;
-        target = targetPosition;
+        this.targetTransform = to;
     }
 }

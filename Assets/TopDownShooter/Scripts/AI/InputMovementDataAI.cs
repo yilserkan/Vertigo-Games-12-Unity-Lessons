@@ -7,9 +7,9 @@ public class InputMovementDataAI : InputDataAI
 {
     public override void ProcessInput()
     {
-        float distanceToTarget = Vector3.Distance(target, aiTransform.position);
+        float distanceToTarget = Vector3.Distance(targetTransform.position, aiTransform.position);
 
-        if (distanceToTarget > 1f)
+        if (distanceToTarget > 5f)
         {
             Vertical = 1;
         }
@@ -18,12 +18,12 @@ public class InputMovementDataAI : InputDataAI
             Vertical = 0;
         }
 
-        float dotTurnRotation = Vector3.Dot(aiTransform.right, (target - aiTransform.position).normalized);
+        float dotTurnRotation = Vector3.Dot(aiTransform.right, (targetTransform.position - aiTransform.position).normalized);
         
         // This dot product checks if the target is in front or back of the AI.
         // Becaasue the value of dotTurnRotation will be 0 if the target is directly in front or behind the AI
         // So we need to check if the target is infront only then it shoudl stop turning
-        float dotTargetInFront = Vector3.Dot(aiTransform.forward, (target - aiTransform.position).normalized);
+        float dotTargetInFront = Vector3.Dot(aiTransform.forward, (targetTransform.position - aiTransform.position).normalized);
         
         float signOfDotProduct = Mathf.Sign(dotTurnRotation);
 
