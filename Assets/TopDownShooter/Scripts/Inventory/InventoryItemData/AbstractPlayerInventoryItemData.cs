@@ -12,10 +12,12 @@ namespace TopDownShooter.Inventory
         [SerializeField] protected string itemId;
         [SerializeField] protected PlayerInventoryItemTypes itemType;
         [SerializeField] protected T prefab;
+        [SerializeField] protected T instansiated;
 
         protected T InstansiateAndInitializePrefab(Transform parent)
         {
-            return Instantiate(prefab, parent);
+            instansiated = Instantiate(prefab, parent);
+            return instansiated;
         }
         
     }
