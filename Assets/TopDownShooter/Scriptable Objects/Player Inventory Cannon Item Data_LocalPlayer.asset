@@ -16,5 +16,5 @@ MonoBehaviour:
   itemType: 0
   prefab: {fileID: -467577455631893372, guid: daf99b8ac5459fa4da7aa86e40b2fd08, type: 3}
   instansiated: {fileID: 0}
-  damage: 5
+  damage: 20
   rpm: 1

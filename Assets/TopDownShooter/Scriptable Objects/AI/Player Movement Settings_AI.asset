@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Player Movement Settings_AI
   m_EditorClassIdentifier: 
   horizontalSpeed: 0.5
-  verticalSpeed: 0.01
+  verticalSpeed: 0.05
