@@ -25,7 +25,7 @@ namespace TopDownShooter.PlayerInput
         [SerializeField] private KeyCode verticalNegativKey;
         [SerializeField] private float lerpSpeed = 1f;
 
-        public void ProcessInput()
+        public virtual void ProcessInput()
         {
             if (isAxisActive)
             {
