@@ -14,6 +14,8 @@ namespace TopDownShooter
         [SerializeField] private float armor = 100f;
 
         public ReactiveCommand OnDeath = new ReactiveCommand();
+
+        private bool _isDead = false;
         
         public int InstanceID { get; private set; }
 
@@ -44,17 +46,21 @@ namespace TopDownShooter
                 health += armor;
                 armor = 0;
                 
-                Debug.Log($"Damage Amount -> {damage}, Remaining health -> {health}");
-
-                CheckDeath();
+                CheckHealth();
             }
         }
 
-        private void CheckDeath()
+        private void CheckHealth()
         {
+            if (_isDead)
+            {
+                return;
+            }
             if (health <= 0)
             {
+                StopAllCoroutines();
                 this.RemoveDamageable();
+                _isDead = true;
                 OnDeath.Execute();
                 Destroy(gameObject);
             }
@@ -68,7 +74,7 @@ namespace TopDownShooter
                 health -= damageAmount;
                 duration--;
                 
-                CheckDeath();
+                CheckHealth();
             }
         }
         
