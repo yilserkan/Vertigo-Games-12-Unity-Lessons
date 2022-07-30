@@ -27,6 +27,11 @@ namespace TopDownShooter
 
         public void Damage(IDamage damage)
         {
+            if (damage.TimeBaseDamage > 0)
+            {
+                StartCoroutine(DealDamageOverTime(damage.TimeBaseDamage, damage.TimeBaseDamageDuration));
+            }
+            
             if (armor > 0)
             {
                 armor -= damage.Damage * damage.ArmorPenetration;
@@ -41,12 +46,29 @@ namespace TopDownShooter
                 
                 Debug.Log($"Damage Amount -> {damage}, Remaining health -> {health}");
 
-                if (health <= 0)
-                {
-                    this.RemoveDamageable();
-                    OnDeath.Execute();
-                    Destroy(gameObject);
-                }
+                CheckDeath();
+            }
+        }
+
+        private void CheckDeath()
+        {
+            if (health <= 0)
+            {
+                this.RemoveDamageable();
+                OnDeath.Execute();
+                Destroy(gameObject);
+            }
+        }
+
+        IEnumerator DealDamageOverTime(float damageAmount, float duration)
+        {
+            while (duration > 0)
+            {
+                yield return new WaitForSeconds(1);
+                health -= damageAmount;
+                duration--;
+                
+                CheckDeath();
             }
         }
         

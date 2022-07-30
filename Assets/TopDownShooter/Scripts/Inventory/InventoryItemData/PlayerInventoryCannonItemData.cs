@@ -14,10 +14,20 @@ namespace TopDownShooter.Inventory
         
         [SerializeField] private float rpm = 1;
         public float RPM { get { return rpm; } }
+        
 
         [Range(.1f, 2)]
         [SerializeField] private float armorPenetration = 1;
         public float ArmorPenetration { get { return armorPenetration; } }
+        
+        
+        [SerializeField] private float timeBaseDamage = 5f;
+        public float TimeBaseDamage { get { return timeBaseDamage; } }
+        
+
+        [SerializeField] private float timeBaseDamageDuration = 1f;
+        public float TimeBaseDamageDuration { get { return timeBaseDamageDuration; } }
+        
 
         private float _lastShootTime;
         
