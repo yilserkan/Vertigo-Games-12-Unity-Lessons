@@ -20,7 +20,7 @@ namespace TopDownShooter.Inventory
             Debug.Log("Scriptable Shoot Manager Destroyed");
         }
 
-        public void Shoot(Vector3 origin, Vector3 direction, float damageAmount)
+        public void Shoot(Vector3 origin, Vector3 direction, IDamage damage)
         {
             RaycastHit hit;
             bool physics = Physics.Raycast(origin, direction, out hit);
@@ -31,7 +31,7 @@ namespace TopDownShooter.Inventory
                 int colliderInstanceID = hit.collider.GetInstanceID();
                 if (DamageableHelper.DamageablesList.ContainsKey(colliderInstanceID))
                 {
-                    DamageableHelper.DamageablesList[colliderInstanceID].Damage(damageAmount);
+                    DamageableHelper.DamageablesList[colliderInstanceID].Damage(damage);
                 }
             }
         }

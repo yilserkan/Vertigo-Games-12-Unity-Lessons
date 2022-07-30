@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TopDownShooter.Stats;
 using UnityEngine;
 
 namespace TopDownShooter.Inventory
@@ -9,9 +10,9 @@ namespace TopDownShooter.Inventory
     {
         [SerializeField] private Transform cannonShotPoint;
 
-        public void Shoot(float damageAmount)
+        public void Shoot(IDamage damage)
         {
-            ScriptableShootManager.Instance.Shoot(cannonShotPoint.position, cannonShotPoint.forward, damageAmount);
+            ScriptableShootManager.Instance.Shoot(cannonShotPoint.position, cannonShotPoint.forward, damage);
         }
 
         private void OnDrawGizmos()

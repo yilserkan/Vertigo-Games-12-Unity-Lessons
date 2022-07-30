@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TopDownShooter.Stats;
 using UniRx;
 using UnityEngine;
 
 namespace TopDownShooter.Inventory
 {
     [CreateAssetMenu(menuName = "Scriptable Objects/Inventory/Cannon Item Data")]
-    public class PlayerInventoryCannonItemData : AbstractPlayerInventoryItemData<PlayerInventoryCannonItemMono>
+    public class PlayerInventoryCannonItemData : AbstractPlayerInventoryItemData<PlayerInventoryCannonItemMono>, IDamage
     {
         [SerializeField] private float damage = 5;
         public float Damage { get { return damage; } }
         
         [SerializeField] private float rpm = 1;
         public float RPM { get { return rpm; } }
+
+        [Range(.1f, 2)]
+        [SerializeField] private float armorPenetration = 1;
+        public float ArmorPenetration { get { return armorPenetration; } }
 
         private float _lastShootTime;
         
@@ -36,7 +41,7 @@ namespace TopDownShooter.Inventory
         {
             if (Time.time - _lastShootTime > rpm)
             {
-                instansiated.Shoot(Damage);
+                instansiated.Shoot(this);
                 _lastShootTime = Time.time;
             }
             else

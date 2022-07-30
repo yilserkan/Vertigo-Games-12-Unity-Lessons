@@ -11,6 +11,7 @@ namespace TopDownShooter
     {
         [SerializeField] private Collider collider;
         [SerializeField] private float health = 100f;
+        [SerializeField] private float armor = 100f;
 
         public ReactiveCommand OnDeath = new ReactiveCommand();
         
@@ -24,16 +25,28 @@ namespace TopDownShooter
             _defaultScale = transform.localScale;
         }
 
-        public void Damage(float damageAmount)
+        public void Damage(IDamage damage)
         {
-            health -= damageAmount;
-            Debug.Log($"Damage Amount -> {damageAmount}, Remaining health -> {health}");
-            
-            if (health <= 0)
+            if (armor > 0)
             {
-                this.RemoveDamageable();
-                OnDeath.Execute();
-                Destroy(gameObject);
+                armor -= damage.Damage * damage.ArmorPenetration;
+            }
+            else
+            {
+                health -= damage.Damage;
+
+                // If Armor got more damage than its value substract it from damage
+                health += armor;
+                armor = 0;
+                
+                Debug.Log($"Damage Amount -> {damage}, Remaining health -> {health}");
+
+                if (health <= 0)
+                {
+                    this.RemoveDamageable();
+                    OnDeath.Execute();
+                    Destroy(gameObject);
+                }
             }
         }
         

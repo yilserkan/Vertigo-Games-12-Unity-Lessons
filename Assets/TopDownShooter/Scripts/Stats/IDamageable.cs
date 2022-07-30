@@ -23,6 +23,6 @@ namespace TopDownShooter.Stats
     {
         int InstanceID { get; }
 
-        void Damage(float damageAmount);
+        void Damage(IDamage damage);
     }
 }
