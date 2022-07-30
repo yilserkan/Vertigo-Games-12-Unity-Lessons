@@ -1,13 +1,22 @@
 ﻿using UnityEngine;
 using TopDownShooter.PlayerInput;
 
-public class InputDataAI : InputData
+namespace TopDownShooter.AI
 {
-    protected Transform targetTransform;
-    protected Transform aiTransform;
-    public void SetTarget(Transform from ,Transform to)
+    public class InputDataAI : AbstractInputData
     {
-        aiTransform = from;
-        this.targetTransform = to;
+        protected Transform targetTransform;
+        protected Transform aiTransform;
+        public void SetTarget(Transform from ,Transform to)
+        {
+            aiTransform = from;
+            this.targetTransform = to;
+        }
+
+        public override void ProcessInput()
+        {
+            
+        }
     }
 }
+
