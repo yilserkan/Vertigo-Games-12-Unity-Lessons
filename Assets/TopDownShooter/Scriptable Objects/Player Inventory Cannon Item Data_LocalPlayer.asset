@@ -18,3 +18,4 @@ MonoBehaviour:
   instansiated: {fileID: 0}
   damage: 20
   rpm: 1
+  armorPenetration: 0.3
