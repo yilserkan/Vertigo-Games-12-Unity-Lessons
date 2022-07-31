@@ -8,7 +8,7 @@ namespace TopDownShooter.PlayerControls
 {
     public class WheelRotationController : MonoBehaviour
     {
-        [SerializeField] private InputData movementInput;
+        [SerializeField] private AbstractInputData movementInput;
         [SerializeField] private WheelRotationSettings wheelRotationSettings;
         
         [SerializeField] private Transform[] rightWheels;
