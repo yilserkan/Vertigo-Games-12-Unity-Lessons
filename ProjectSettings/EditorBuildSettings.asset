@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Lessons/Scenes/SampleScene.unity
-    guid: d1c3109bdb54ad54c8a2b2838528e640
+    path: Assets/TopDownShooter/Scenes/InitializeScene.unity
+    guid: 24cca57bc4909b14f8d31ecb7c1cbfa5
+  - enabled: 1
+    path: Assets/TopDownShooter/Scenes/MenuScene.unity
+    guid: 7ec914ebbb90d1845b0487c6b6a42c6a
+  - enabled: 1
+    path: Assets/TopDownShooter/Scenes/GameScene.unity
+    guid: 522f844aa5fbf054a9c3aa16bf5dd543
   m_configObjects: {}
