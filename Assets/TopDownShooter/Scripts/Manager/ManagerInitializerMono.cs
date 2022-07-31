@@ -8,7 +8,9 @@ namespace TopDownShooter
     public class ManagerInitializerMono : MonoBehaviour
     {
         [SerializeField] private AbstractScriptableManagerBase[] abstractScriptableManagerArray;
+        [SerializeField] private bool _dontDestroyOnLoad;
         private List<AbstractScriptableManagerBase> _instansiatedScriptableManagerList;
+       
 
         private void Start()
         {
@@ -22,6 +24,11 @@ namespace TopDownShooter
                 var instansiated = Instantiate(abstractScriptableManagerArray[i]);
                 instansiated.Initialize();
                 _instansiatedScriptableManagerList.Add(instansiated);
+            }
+
+            if (_dontDestroyOnLoad)
+            {
+                DontDestroyOnLoad(gameObject);
             }
         }
 
