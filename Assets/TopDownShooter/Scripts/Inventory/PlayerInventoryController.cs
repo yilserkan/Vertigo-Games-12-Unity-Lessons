@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TopDownShooter.Stats;
 using UnityEngine;
 using UniRx;
 
 namespace TopDownShooter.Inventory
 {
-    public class PlayerInventoryController : MonoBehaviour
+    public class PlayerInventoryController : MonoBehaviour, IPlayerStatHolder
     {
         [SerializeField] private AbstractBasePlayerInventoryItemData[] inventoryItemDataArray;
         private List<AbstractBasePlayerInventoryItemData> _instansiatedItemDataList;
@@ -17,6 +18,7 @@ namespace TopDownShooter.Inventory
         public Transform BodyParent;
 
         public int PlayerID { get; set; }
+        public PlayerStat PlayerStat { get; }
 
         private void Start()
         {
@@ -56,6 +58,11 @@ namespace TopDownShooter.Inventory
                     _instansiatedItemDataList[i].Destroy();
                 }
             }
+        }
+        
+        public void SetStat(PlayerStat playerStat)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace TopDownShooter.AI
         private Transform _targetTransform;
         private bool _hasTarget;
 
-        private void Awake()
+        private void Start()
         {
             aiMovementInputData = Instantiate(aiMovementInputData);
             aiRotationInputData = Instantiate(aiRotationInputData);
@@ -66,7 +66,7 @@ namespace TopDownShooter.AI
             aiRotationInputData.SetTarget(towerRotationController.Tower, _targetTransform);
             
             _targetDispose = new CompositeDisposable();
-            targetsList[0].OnDeath.Subscribe(OnTargetdeath).AddTo(_targetDispose);
+            targetsList[0].PlayerStat.OnDeath.Subscribe(OnTargetdeath).AddTo(_targetDispose);
         }
         
         

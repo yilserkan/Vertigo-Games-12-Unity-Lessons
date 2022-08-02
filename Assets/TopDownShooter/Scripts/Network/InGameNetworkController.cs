@@ -53,7 +53,7 @@ namespace TopDownShooter.Network
             {
                 allocatedViewIDArray[i] = PhotonNetwork.AllocateViewID();
             }
-            instansiated.SetOwnership(PhotonNetwork.player, allocatedViewIDArray, PhotonNetwork.player.ID);
+            instansiated.SetOwnership(PhotonNetwork.player, allocatedViewIDArray);
             
             photonView.RPC(nameof(RPC_InstansiatedPlayer), PhotonTargets.OthersBuffered ,allocatedViewIDArray);
         }
@@ -62,7 +62,7 @@ namespace TopDownShooter.Network
         public void RPC_InstansiatedPlayer(int[] viewIDArray, PhotonMessageInfo photonNetworkingMessage)
         {
             var instanisated = Instantiate(remotePlayer);
-            instanisated.SetOwnership(photonNetworkingMessage.sender, viewIDArray, photonNetworkingMessage.sender.ID);
+            instanisated.SetOwnership(photonNetworkingMessage.sender, viewIDArray);
         }
         
         public void Shoot(Vector3 origin)

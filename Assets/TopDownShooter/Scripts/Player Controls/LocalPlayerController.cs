@@ -7,9 +7,8 @@ using UnityEngine;
 
 namespace TopDownShooter
 {
-    public class LocalPlayerController : MonoBehaviour
+    public class LocalPlayerController : PlayerController
     {
-        [SerializeField] private PlayerInventoryController playerInventoryController;
         [SerializeField] private AbstractInputData shootInputData;
 
         private void Update()
