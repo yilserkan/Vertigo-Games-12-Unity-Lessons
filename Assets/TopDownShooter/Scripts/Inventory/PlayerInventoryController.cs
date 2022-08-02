@@ -16,6 +16,8 @@ namespace TopDownShooter.Inventory
         public Transform CannonParent;
         public Transform BodyParent;
 
+        public int PlayerID { get; set; }
+
         private void Start()
         {
             InitializeInventory();

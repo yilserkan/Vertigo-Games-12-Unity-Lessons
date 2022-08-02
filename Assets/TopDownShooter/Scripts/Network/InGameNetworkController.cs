@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TopDownShooter.Events;
+using TopDownShooter.Inventory;
 using UniRx;
 using UnityEngine;
 
@@ -18,8 +19,9 @@ namespace TopDownShooter.Network
         private void Awake()
         {
             MessageBroker.Default.Receive<EventSceneLoaded>().Subscribe(OnSceneLoaded).AddTo(gameObject);
+            MessageBroker.Default.Receive<EventPlayerShoot>().Subscribe(OnPlayerShoot).AddTo(gameObject);
         }
-
+        
         private void OnSceneLoaded(EventSceneLoaded eventScene)
         {
             switch (eventScene.SceneName)
@@ -34,6 +36,15 @@ namespace TopDownShooter.Network
                     break;
             }
         }
+        
+        private void OnPlayerShoot(EventPlayerShoot playerShoot)
+        {
+            if (PhotonNetwork.player.ID == playerShoot.PlayerID)
+            {
+                Shoot(playerShoot.Origin);     
+            }
+        }
+
         public void InstansiatePlayer()
         {
             var instansiated = Instantiate(localPlayer);
@@ -42,7 +53,7 @@ namespace TopDownShooter.Network
             {
                 allocatedViewIDArray[i] = PhotonNetwork.AllocateViewID();
             }
-            instansiated.SetOwnership(PhotonNetwork.player, allocatedViewIDArray);
+            instansiated.SetOwnership(PhotonNetwork.player, allocatedViewIDArray, PhotonNetwork.player.ID);
             
             photonView.RPC(nameof(RPC_InstansiatedPlayer), PhotonTargets.OthersBuffered ,allocatedViewIDArray);
         }
@@ -51,7 +62,18 @@ namespace TopDownShooter.Network
         public void RPC_InstansiatedPlayer(int[] viewIDArray, PhotonMessageInfo photonNetworkingMessage)
         {
             var instanisated = Instantiate(remotePlayer);
-            instanisated.SetOwnership(photonNetworkingMessage.sender, viewIDArray);
+            instanisated.SetOwnership(photonNetworkingMessage.sender, viewIDArray, photonNetworkingMessage.sender.ID);
+        }
+        
+        public void Shoot(Vector3 origin)
+        {
+            photonView.RPC(nameof(RPC_Shoot), PhotonTargets.Others, origin);
+        }
+
+        [PunRPC]
+        public void RPC_Shoot(Vector3 origin,PhotonMessageInfo photonNetworkingMessage)
+        {
+            MessageBroker.Default.Publish(new EventPlayerShoot(origin,photonNetworkingMessage.sender.ID));
         }
     }
 }

@@ -51,7 +51,7 @@ namespace TopDownShooter.Inventory
         {
             if (Time.time - _lastShootTime > rpm)
             {
-                instansiated.Shoot(this);
+                instansiated.Shoot(this, playerInventory.PlayerID);
                 _lastShootTime = Time.time;
             }
             else

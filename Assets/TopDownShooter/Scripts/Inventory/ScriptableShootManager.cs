@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TopDownShooter.Stats;
+using UniRx;
 using UnityEngine;
 
 namespace TopDownShooter.Inventory
@@ -20,14 +21,17 @@ namespace TopDownShooter.Inventory
             Debug.Log("Scriptable Shoot Manager Destroyed");
         }
 
-        public void Shoot(Vector3 origin, Vector3 direction, IDamage damage)
+        public void Shoot(Vector3 origin, Vector3 direction, IDamage damage, int playerID)
         {
             RaycastHit hit;
+            
+            MessageBroker.Default.Publish(new EventPlayerShoot(origin, playerID));
+            
             bool physics = Physics.Raycast(origin, direction, out hit);
             if (physics)
             {
                 Debug.Log(hit.collider.name);
-
+                
                 int colliderInstanceID = hit.collider.GetInstanceID();
                 if (DamageableHelper.DamageablesList.ContainsKey(colliderInstanceID))
                 {
