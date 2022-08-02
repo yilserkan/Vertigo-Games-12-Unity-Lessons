@@ -9,10 +9,12 @@ namespace TopDownShooter.Network
     public class NetworkPlayer : Photon.PunBehaviour
     {
         public PlayerStat PlayerStat { get; private set; }
-        public bool IsLocalPlayer { get; set; }
+     
         [SerializeField] private PhotonView[] _photonViewsForOwnership;
         private List<IPlayerStatHolder> _playerStatHolders = new List<IPlayerStatHolder>();
         public PhotonView[] PhotonViewsForOwnership { get { return _photonViewsForOwnership; } }
+
+        private bool _instanstiated = false;
         public void SetOwnership(PhotonPlayer player, int[] viewIdArray)
         {
             for (int i = 0; i < _photonViewsForOwnership.Length; i++)
@@ -21,13 +23,23 @@ namespace TopDownShooter.Network
                 _photonViewsForOwnership[i].TransferOwnership(player);
             }
 
-            PlayerStat = new PlayerStat(player.ID);
-            IsLocalPlayer = PhotonNetwork.player.IsLocal;
+            PlayerStat = new PlayerStat(player.ID, PhotonNetwork.player.IsLocal);
+
+            for (int i = 0; i < _playerStatHolders.Count; i++)
+            {
+                _playerStatHolders[i].SetStat(PlayerStat);
+            }
+
+            _instanstiated = true;
         }
 
         public void RegisterStatHolder(IPlayerStatHolder playerStatHolder)
         {
             _playerStatHolders.Add(playerStatHolder);
+            if (_instanstiated)
+            {
+                playerStatHolder.SetStat(PlayerStat);
+            }
         }
         
         public void UnregisterStatHolder(IPlayerStatHolder playerStatHolder)

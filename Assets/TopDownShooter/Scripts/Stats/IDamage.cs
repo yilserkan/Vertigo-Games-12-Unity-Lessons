@@ -10,6 +10,8 @@ namespace TopDownShooter.Stats
         float ArmorPenetration { get; }
         float TimeBaseDamage { get; }
         float TimeBaseDamageDuration { get; }
+        
+        PlayerStat PlayerStat { get; }
     }
 }
 

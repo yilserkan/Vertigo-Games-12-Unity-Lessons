@@ -37,7 +37,7 @@ namespace TopDownShooter.Network
         private void Awake()
         {
             Instance = this;
-            PhotonNetwork.CacheSendMonoMessageTargets(typeof(MatchmakingController));
+            // PhotonNetwork.CacheSendMonoMessageTargets(typeof(MatchmakingController));
         }
 
         private IEnumerator Start()
@@ -80,7 +80,7 @@ namespace TopDownShooter.Network
             CurrentNetworkState = PlayerNetworkState.InRoom;
             PhotonNetwork.isMessageQueueRunning = false;
         }
-
+        
         public override void OnLeftRoom()
         {
             base.OnLeftRoom();

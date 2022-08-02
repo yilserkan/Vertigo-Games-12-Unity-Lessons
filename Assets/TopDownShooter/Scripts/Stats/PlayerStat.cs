@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TopDownShooter.Events;
 using UniRx;
 using UnityEngine;
 
@@ -12,12 +13,15 @@ namespace TopDownShooter.Stats
         
         public ReactiveCommand OnDeath = new ReactiveCommand();
         private bool _isDead = false;
+        public bool IsLocalPlayer { get; set; }
         public int Id { get; set; }
         public int InstanceID { get; } = -1;
 
-        public PlayerStat(int id)
+        public PlayerStat(int id, bool isLocalPlayer)
         {
             Id = id;
+            IsLocalPlayer = isLocalPlayer;
+            ScriptableStatManager.Instance.RegisterPlayerStat(this);
         }
 
      
@@ -37,9 +41,10 @@ namespace TopDownShooter.Stats
                 
                 CheckHealth();
             }
+            MessageBroker.Default.Publish(new EventPlayerDamage(damage.Damage, this, damage.PlayerStat));
         }
         
-        public void Damage(float damage)
+        public void Damage(float damage, PlayerStat shooterStat)
         {
             if (Armor.Value > 0)
             {
@@ -55,6 +60,7 @@ namespace TopDownShooter.Stats
                 
                 CheckHealth();
             }
+            MessageBroker.Default.Publish(new EventPlayerDamage(damage, this, shooterStat));
         }
         
         private void CheckHealth()

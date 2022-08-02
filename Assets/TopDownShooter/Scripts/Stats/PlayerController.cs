@@ -3,18 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using TopDownShooter.Inventory;
 using TopDownShooter.Network;
+using TopDownShooter.Stats;
 using UniRx;
 using UnityEngine;
 using NetworkPlayer = TopDownShooter.Network.NetworkPlayer;
 
 namespace TopDownShooter
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IPlayerStatHolder
     {
         [SerializeField] private DamageableObjectBase[] damageableObjectBases;
         [SerializeField] protected PlayerInventoryController playerInventoryController;
         [SerializeField] private NetworkPlayer networkPlayer;
 
+        public PlayerStat PlayerStat { get; set; }
+        
         protected void Start()
         {
             networkPlayer.RegisterStatHolder(playerInventoryController);
@@ -24,11 +27,13 @@ namespace TopDownShooter
             {
                 networkPlayer.RegisterStatHolder(damageableObjectBases[i]);
             }
+            
+            networkPlayer.RegisterStatHolder(this);
         }
 
         private void OnDeath(Unit obj)
         {
-            if (networkPlayer.IsLocalPlayer)
+            if (networkPlayer.PlayerStat.IsLocalPlayer)
             {
                 MatchmakingController.Instance.LeaveRoom();
             }
@@ -36,6 +41,12 @@ namespace TopDownShooter
             {
                 Destroy(gameObject);
             }
+        }
+
+        public void SetStat(PlayerStat playerStat)
+        {
+            PlayerStat = playerStat;
+            playerStat.OnDeath.Subscribe(OnDeath).AddTo(gameObject);
         }
     }
 }

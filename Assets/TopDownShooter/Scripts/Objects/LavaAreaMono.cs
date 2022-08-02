@@ -21,6 +21,7 @@ namespace TopDownShooter.Objects
 
         [SerializeField] private float timeBaseDamageDuration = 1f;
         public float TimeBaseDamageDuration { get { return timeBaseDamageDuration; } }
+        public PlayerStat PlayerStat { get { return null; } }
 
         private void OnTriggerEnter(Collider collider)
         {

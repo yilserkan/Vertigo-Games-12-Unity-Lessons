@@ -10,9 +10,9 @@ namespace TopDownShooter.Inventory
     {
         [SerializeField] private Transform cannonShotPoint;
 
-        public void Shoot(IDamage damage, int playerID)
+        public void Shoot(IDamage damage, PlayerStat playerStat)
         {
-            ScriptableShootManager.Instance.Shoot(cannonShotPoint.position, cannonShotPoint.forward, damage, playerID);
+            ScriptableShootManager.Instance.Shoot(cannonShotPoint.position, cannonShotPoint.forward, damage, playerStat);
         }
 
         private void OnDrawGizmos()

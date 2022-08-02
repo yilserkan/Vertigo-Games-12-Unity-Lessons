@@ -25,7 +25,7 @@ namespace TopDownShooter
         {
             if (damage.TimeBaseDamage > 0)
             {
-                StartCoroutine(DealDamageOverTime(damage.TimeBaseDamage, damage.TimeBaseDamageDuration));
+                StartCoroutine(DealDamageOverTime(damage.TimeBaseDamage, damage.TimeBaseDamageDuration, damage.PlayerStat));
             }
             else
             {
@@ -36,13 +36,13 @@ namespace TopDownShooter
 
      
 
-        IEnumerator DealDamageOverTime(float damageAmount, float duration)
+        IEnumerator DealDamageOverTime(float damageAmount, float duration ,PlayerStat playerStat)
         {
             while (duration > 0)
             {
                 yield return new WaitForSeconds(1);
                 duration--;
-                PlayerStat.Damage(damageAmount);
+                PlayerStat.Damage(damageAmount ,playerStat);
              
             }
         }
@@ -50,7 +50,7 @@ namespace TopDownShooter
       
         public void SetStat(PlayerStat playerStat)
         {
-            throw new NotImplementedException();
+            PlayerStat = playerStat;
         }
     }
 }

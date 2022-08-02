@@ -18,7 +18,7 @@ namespace TopDownShooter.Inventory
         public Transform BodyParent;
 
         public int PlayerID { get; set; }
-        public PlayerStat PlayerStat { get; }
+        public PlayerStat PlayerStat { get; private set; }
 
         private void Start()
         {
@@ -62,7 +62,7 @@ namespace TopDownShooter.Inventory
         
         public void SetStat(PlayerStat playerStat)
         {
-            throw new NotImplementedException();
+            PlayerStat = playerStat;
         }
     }
 }
