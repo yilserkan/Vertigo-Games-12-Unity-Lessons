@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TopDownShooter.Events;
 using TopDownShooter.Network;
 using UniRx;
 using UnityEngine;
@@ -20,6 +21,12 @@ namespace TopDownShooter
             SceneManager.LoadScene(menuScene);
             MessageBroker.Default.Receive<EventPlayerNetworkState>().Subscribe(OnEventPlayerNetworkState)
                 .AddTo(compositeDisposable);
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+        {
+            MessageBroker.Default.Publish(new EventSceneLoaded(arg0.name));
         }
 
         public override void Destroy()
@@ -31,7 +38,7 @@ namespace TopDownShooter
         {
             switch (playerNetworkState._playerNetworkState)
             {
-                case PlayerNetworkState.Disconnected:
+                case PlayerNetworkState.Offline:
                     break;
                 case PlayerNetworkState.Connecting:
                     break;
